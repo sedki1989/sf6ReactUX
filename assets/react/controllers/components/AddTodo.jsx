@@ -2,12 +2,25 @@ import React, {useState} from "react";
 
 export default function AddTodo({addToDo}) {
   let [newToDo, setNewTodo] = useState('');
+  let [warning, setWarning] = useState(false);
   let handleClick = (e) => {
     e.preventDefault();
-    addToDo(newToDo);
+    if(newToDo !== '') {
+      warning && setWarning(false);
+      addToDo(newToDo);
+      setNewTodo('');
+    } else {
+      setWarning(true);
+    }
   }
   return (
     <div className="mb-4">
+      { warning && <div className="flex-no-shrink p-2 text-red-500" role="alert">
+        <div>
+          Veuillez insérer un ToDo !
+        </div>
+      </div>
+      }
       <h1 className="text-grey-darkest">Todo List</h1>
       <div className="flex mt-4">
         <input
